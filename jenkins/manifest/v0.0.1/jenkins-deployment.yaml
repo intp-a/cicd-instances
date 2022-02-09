@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jenkins
+    version: v0.0.1
+  name: jenkins-v0.0.1
+  namespace: cicd-instances
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      deployment: jenkins-v0.0.1
+  template:
+    metadata:
+      labels:
+        deployment: jenkins-v0.0.1
+        app: jenkins
+    spec:
+      containers:
+      - image: docker-registry.cicd-instances.svc.cluster.local:5000/jenkins-custom:v0.0.1
+        imagePullPolicy: Always
+        name: jenkins
+        env:
+          - name: TZ
+            value: Asia/Seoul
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        securityContext:
+          runAsUser: 1001
+        volumeMounts:
+        - mountPath: /var/jenkins_home
+          name: jenkins-pvc
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      serviceAccount: jenkins
+      serviceAccountName: jenkins
+      volumes:
+      - name: jenkins-pvc
+        emptyDir: {}
+
