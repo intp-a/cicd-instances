@@ -33,6 +33,15 @@ spec:
         volumeMounts:
         - mountPath: /var/jenkins_home
           name: jenkins-pvc
+      - args:
+        - apt-get -y update && apt-get -y install curl && tail -f /dev/null
+        command:
+        - /bin/bash
+        - -c
+        - --
+        image: ubuntu:14.04
+        imagePullPolicy: IfNotPresent
+        name: test
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       volumes:

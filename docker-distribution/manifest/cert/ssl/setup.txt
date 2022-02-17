@@ -1,0 +1,16 @@
+openssl genrsa -aes256 -out docker-registry.key 2048
+
+cp  docker-registry.key  docker-registry.key.enc
+
+openssl rsa -in  docker-registry.key.enc -out docker-registry.key
+
+openssl req -new -key docker-registry.key -out docker-registry.csr -config registry_openssl.conf
+
+openssl x509 -req -days 1825 -extensions v3_user -in docker-registry.csr \
+-CA ../rootca/intp-rootca.crt -CAcreateserial \
+-CAkey  ../rootca/intp-rootca.key \
+-out docker-registry.crt  -extfile registry_openssl.conf
+
+kubectl -n cicd-instances create secret generic docker-registry-certs \
+    --from-file=server.crt=docker-registry.crt,server.key=docker-registry.key \
+    --type=Opaque

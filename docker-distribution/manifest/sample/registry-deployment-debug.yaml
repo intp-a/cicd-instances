@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: docker-registry
+  name: docker-registry
+  namespace: cicd-instances
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: docker-registry
+  template:
+    metadata:
+      labels:
+        app: docker-registry
+        deployment: docker-registry
+    spec:
+      containers:
+      - image: registry:2.7.1
+        imagePullPolicy: IfNotPresent
+        name: docker-registry
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/registry
+          name: empty-dir
+      - args:
+        - apt-get -y update && apt-get -y install curl && apt-get install -y docker
+          && tail -f /dev/null
+        command:
+        - /bin/bash
+        - -c
+        - --
+        image: ubuntu:14.04
+        imagePullPolicy: IfNotPresent
+        name: test
+      volumes:
+      - emptyDir: {}
+        name: empty-dir

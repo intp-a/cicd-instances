@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-debug
+    version: v0.0.1
+  name: test-debug
+  namespace: cicd-instances
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      deployment: test-debug
+  template:
+    metadata:
+      labels:
+        deployment: test-debug
+        app: test-debug
+    spec:
+      containers:
+      - args:
+        - apt-get update && apt-get install -y curl && tail -f /dev/null
+        command:
+        - /bin/bash
+        - -c
+        - --
+        image: ubuntu:latest
+        imagePullPolicy: IfNotPresent
+        name: test
