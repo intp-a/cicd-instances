@@ -22,7 +22,12 @@ openssl x509 -req -days 1825 -extensions v3_user -in docker-registry.csr \
 -out docker-registry.crt  -extfile registry_openssl.conf
 ```
 
-### 생성된 인증서 
+### 생성된 인증서 확인
+```
+openssl x509 -text -in docker-registry.crt
+```
+
+### 생성된 SSL 인증서로 secret 
 ```
 kubectl -n cicd-instances create secret generic docker-registry-certs \
     --from-file=server.crt=docker-registry.crt,server.key=docker-registry.key \
