@@ -32,7 +32,7 @@ spec:
         - name: IMAGE
           value: "$(params.image-repo):$(tasks.clone-repository.results.commit)"
         - name: DOCKERFILE
-          value: ./cicd-instances/tekton/openjdk-base-image/dockerfile/Dockerfile.jdk11
+          value: ./cicd-instances/tekton/openjdk-base-image/dockerfile/Dockerfile.openjdk11
       taskRef:
         kind: Task
         name: buildah
