@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: TaskRun
 metadata:
-  name: buildah-build-my-repo
+  name: openjdk11-base-image-taskrun
 spec:
   taskRef:
     name: buildah
