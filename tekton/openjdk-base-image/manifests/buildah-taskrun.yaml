@@ -13,4 +13,4 @@ spec:
   workspaces:
   - name: source
     persistentVolumeClaim:
-      claimName: pipeline-pvc
+      claimName: pipeline-workspace-pvc
