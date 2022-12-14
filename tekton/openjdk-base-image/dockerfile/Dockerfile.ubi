@@ -4,9 +4,9 @@ MAINTAINER "gkim" <guardkim9@nate.com>
 USER root
 
 WORKDIR /tmp/setup
-COPY src/ .
+# COPY src/ .
 
-RUN add-apt-repository ppa:openjdk-r/ppa​ && apt-get update​ && apt install openjdk-11-jdk language-pack-ko && apt-get clean all;
+RUN apt-get install software-properties-common && add-apt-repository ppa:openjdk-r/ppa​ && apt-get update​ && apt install openjdk-11-jdk language-pack-ko && apt-get clean all;
 RUN locale-gen ko_KR.UTF-8
 ENV LANG ko_KR.UTF-8
 
