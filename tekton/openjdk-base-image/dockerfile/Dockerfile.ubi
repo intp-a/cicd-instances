@@ -6,7 +6,7 @@ USER root
 WORKDIR /tmp/setup
 # COPY src/ .
 
-RUN apt-get update​ && apt install -y openjdk-11-jdk language-pack-ko && apt-get clean all;
+RUN apt-get install -y openjdk-11-jdk language-pack-ko && apt-get clean all;
 RUN locale-gen ko_KR.UTF-8
 ENV LANG ko_KR.UTF-8
 
