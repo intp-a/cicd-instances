@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: openjdk11-base-image-pipeline-run
+spec:
+  serviceAccountName: private-registry
+  pipelineRef:
+    name: openjdk11-base-image-pipeline
+  workspaces:
+    - name: pipeline-workspace-tmp
+      persistentvolumeclaim:
+        claimName: pipeline-workspace-pvc
