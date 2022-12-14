@@ -1,4 +1,4 @@
-FROM docker.io/ubuntu:18.04
+FROM docker.io/openjdk:11.0.16-jdk
 MAINTAINER "gkim" <guardkim9@nate.com>
 
 USER root
@@ -7,7 +7,7 @@ WORKDIR /tmp/setup
 # COPY src/ .
 
 RUN apt update​ 
-RUN apt install -y openjdk-11-jdk language-pack-ko && apt clean all
+RUN apt install -y language-pack-ko && apt clean all
 
 RUN locale-gen ko_KR.UTF-8
 ENV LANG ko_KR.UTF-8
