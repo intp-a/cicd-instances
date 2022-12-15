@@ -1,0 +1,17 @@
+FROM docker.io/openjdk:11.0.16-jdk
+MAINTAINER "gkim" <guardkim9@nate.com>
+
+USER root
+
+WORKDIR /tmp/setup
+# COPY src/ .
+
+#RUN apt-get update​ 
+#RUN apt-get install -y language-pack-ko && apt-get clean all
+
+#RUN locale-gen ko_KR.UTF-8
+ENV LANG ko_KR.UTF-8
+
+WORKDIR /tmp
+
+USER 1000

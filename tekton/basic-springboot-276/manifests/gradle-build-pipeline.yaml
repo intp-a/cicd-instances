@@ -1,0 +1,50 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: gradle-build-pipeline
+spec:
+  workspaces:
+    - name: pipeline-workspace-tmp
+  params:
+    - name: java-repo-url
+      type: string
+      description: "Url of Java repository to build"
+      default: https://github.com/intp-a/sample-application.git
+    - name: java-repo-rev
+      type: string
+      description: "Revision of Java repository to build"
+      default: main
+    - name: build-dir
+      type: string
+      description: "Base Directory of Java repository to build"
+      default: basic-springboot-276
+  tasks:
+    - name: clone-repository
+      params:
+        - name: url
+          value: "$(params.java-repo-url)"
+        - name: revision
+          value: "$(params.java-repo-rev)"
+        - name: deleteExisting
+          value: "true"
+      taskRef:
+        kind: Task
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: pipeline-workspace-tmp
+    - name: gradle-build
+      runAfter:
+        - clone-repository
+      params:
+        - name: PROJECT_DIR
+          value:  "$(params.build)"
+        - name: TASKS
+          value:
+            - build
+      taskRef:
+        kind: Task
+        name: gradle
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace-tmp

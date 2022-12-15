@@ -3,6 +3,11 @@
 $ kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml
 ```
 
+## Apply gradle Task
+```
+kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/gradle/0.2/raw
+```
+
 ## Apply buildah Task
 ```
 $ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/buildah/0.5/raw
@@ -21,14 +26,16 @@ $ kubectl apply -f manifests/pipeline-workspace-pvc.yaml
 
 ## Pipeline 실행
 ```
-$ kubectl apply -f manifests/openjdk11-base-image-pipeline.yaml
+$ kubectl apply -f manifests/gradle-build-pipeline.yaml
 ```
 
 ## Pipeline 실행
 ```
 $ tkn pipeline start gradle-build-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
-  -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-base-image
+  -p java-repo-url=https://github.com/intp-a/sample-application.git \
+  -p java-repo-rev=main \
+  -p build-dir=basic-springboot-276
 ```
 
 ## Pipeline 로그 조회
