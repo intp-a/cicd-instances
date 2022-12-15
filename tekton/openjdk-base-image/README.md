@@ -15,7 +15,13 @@ $ mkdir /tmp/tekton-tmp
 
 ## Workspace 용도 PV, PVC 생성
 ```
-$ kubectl apply -f pipeline-workspace*.yaml
+$ kubectl apply -f manifests/pipeline-workspace-pv.yaml
+$ kubectl apply -f manifests/pipeline-workspace-pvc.yaml
+```
+
+## Pipeline 실행
+```
+$ kubectl apply -f manifests/openjdk11-base-image-pipeline.yaml
 ```
 
 ## Pipeline 실행
