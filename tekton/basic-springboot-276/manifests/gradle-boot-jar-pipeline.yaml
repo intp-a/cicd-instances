@@ -42,7 +42,7 @@ spec:
         - name: TASKS
           value:
             - clean
-            - build
+            - bootJar
         - name: GRADLE_IMAGE
           value: docker.io/library/gradle:7.6.0-jdk11
       taskRef:
