@@ -10,6 +10,9 @@ spec:
       type: string
       description: Docker image name
       default: private-registry-svc.default.svc.cluster.local:5000/openjdk11-base-image
+    - name: args
+      type: array
+      default: ["--skip-tls-verify"]
   tasks:
     - name: clone-repository
       params:
@@ -33,6 +36,8 @@ spec:
           value: "$(params.image-repo):$(tasks.clone-repository.results.commit)"
         - name: DOCKERFILE
           value: ./tekton/openjdk-base-image/dockerfile/Dockerfile.openjdk11
+        - name: EXTRA_ARGS
+          value: $(params.args)
       taskRef:
         kind: Task
         name: kaniko
