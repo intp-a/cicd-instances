@@ -25,14 +25,39 @@ $ kubectl apply -f manifests/pipeline-workspace-pv.yaml
 $ kubectl apply -f manifests/pipeline-workspace-pvc.yaml
 ```
 
-## Pipeline 실행
+## Gradle Clean build Piepeline
 ```
+# Pipeline 생성
 $ kubectl apply -f manifests/gradle-build-pipeline.yaml
+
+# Pipeline 실행
+$ tkn pipeline start gradle-build-pipeline \
+  -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
+  -p java-repo-url=https://github.com/intp-a/sample-application.git \
+  -p java-repo-rev=main \
+  -p build-dir=basic-springboot-276
 ```
 
-## Pipeline 실행
+## Gradle Clean bootJar Piepeline
 ```
-$ tkn pipeline start gradle-build-pipeline \
+# Pipeline 생성
+$ kubectl apply -f manifests/gradle-boot-jar-pipeline.yaml
+
+# Pipeline 실행
+$ tkn pipeline start gradle-boot-jar-pipeline \
+  -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
+  -p java-repo-url=https://github.com/intp-a/sample-application.git \
+  -p java-repo-rev=main \
+  -p build-dir=basic-springboot-276
+```
+
+## Gradle Clean bootBuildImage Piepeline
+```
+# Pipeline 생성
+$ kubectl apply -f manifests/gradle-boot-build-image-pipeline.yaml
+
+# Pipeline 실행
+$ tkn pipeline start gradle-boot-build-image-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
   -p java-repo-url=https://github.com/intp-a/sample-application.git \
   -p java-repo-rev=main \
