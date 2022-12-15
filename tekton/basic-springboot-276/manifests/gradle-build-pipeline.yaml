@@ -38,7 +38,7 @@ spec:
         - clone-repository
       params:
         - name: PROJECT_DIR
-          value:  "$(params.build)"
+          value:  "$(params.build-dir)"
         - name: TASKS
           value:
             - build

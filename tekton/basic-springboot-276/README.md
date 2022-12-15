@@ -16,6 +16,7 @@ $ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/buildah/0.
 ## Add tmp host path
 ```
 $ mkdir /tmp/tekton-tmp
+$ ssh node01 "mkdir /tmp/tekton-tmp"
 ```
 
 ## Workspace 용도 PV, PVC 생성
