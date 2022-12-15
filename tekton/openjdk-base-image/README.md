@@ -43,6 +43,9 @@ $ tkn pipeline start openjdk11-base-image-pipeline \
 $ tkn pipeline start openjdk11-base-image-kaniko-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
   -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-base-image
+
+### Buildah 는 privileged로 동작해야함(보안상 취약하고 일부 테스트 환경에서 overlayfs 권한 에러가 남)
+### 빌드 성능 저하도 발생
 ```
 
 ## Pipeline 로그 조회
