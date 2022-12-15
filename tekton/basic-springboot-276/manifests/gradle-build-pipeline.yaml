@@ -42,6 +42,8 @@ spec:
         - name: TASKS
           value:
             - build
+        - name: GRADLE_IMAGE
+          value: docker.io/library/gradle:7.6.0-jdk11
       taskRef:
         kind: Task
         name: gradle
