@@ -5,7 +5,7 @@ $ kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/
 
 ## Apply gradle Task
 ```
-kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/gradle/0.2/raw
+$ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/gradle/0.2/raw
 ```
 
 ## Apply buildah Task
@@ -66,5 +66,5 @@ $ tkn pipeline start gradle-boot-build-image-pipeline \
 
 ## Pipeline 로그 조회
 ```
-tkn pipelinerun logs  -f -n default
+$ tkn pipelinerun logs  -f -n default
 ```
