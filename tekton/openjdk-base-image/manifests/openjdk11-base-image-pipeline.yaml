@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: openjdk-base-image-pipeline
+  name: openjdk11-base-image-pipeline
 spec:
   workspaces:
     - name: pipeline-workspace-tmp
