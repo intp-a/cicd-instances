@@ -24,19 +24,20 @@ $ kubectl apply -f manifests/pipeline-workspace-pv.yaml
 $ kubectl apply -f manifests/pipeline-workspace-pvc.yaml
 ```
 
-## Pipeline 실행
+## Pipeline 생성
 ```
 $ kubectl apply -f manifests/openjdk11-base-image-pipeline.yaml
+$ kubectl apply -f manifests/openjdk11-base-image-kaniko-pipeline.yaml
 ```
 
-## Pipeline 실행
+## Pipeline 실행 (buildah)
 ```
 $ tkn pipeline start openjdk11-base-image-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
   -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-base-image
 ```
 
-## Pipeline 실행
+## Pipeline 실행 (kaniko)
 ```
 $ tkn pipeline start openjdk11-base-image-kaniko-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
