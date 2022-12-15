@@ -38,7 +38,7 @@ $ tkn pipeline start openjdk11-base-image-pipeline \
 
 ## Pipeline 실행
 ```
-$ tkn pipeline start openjdk11-base-image-jib-pipeline \
+$ tkn pipeline start openjdk11-base-image-kaniko-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
   -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-base-image
 ```
