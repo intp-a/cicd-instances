@@ -37,7 +37,7 @@ $ tkn pipeline start gradle-build-pipeline \
   -p java-repo-url=https://github.com/intp-a/sample-application.git \
   -p java-repo-rev=main \
   -p build-dir=basic-springboot-276 \
-  -p private-registry-svc.default.svc.cluster.local:5000/basic-springboot-276 \
+  -p image-name=private-registry-svc.default.svc.cluster.local:5000/basic-springboot-276 \
   -p image-tag=v0.0.1 \
   -p dockerfile=./basic-springboot-276/dockerfile/Dockerfile
 
