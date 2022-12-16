@@ -3,11 +3,6 @@
 $ kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml
 ```
 
-## Apply buildah Task
-```
-$ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/buildah/0.5/raw
-```
-
 ## Apply kaniko Task
 ```
 $ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/kaniko/0.6/raw
@@ -27,25 +22,20 @@ $ kubectl apply -f manifests/pipeline-workspace-pvc.yaml
 
 ## Pipeline 생성
 ```
-$ kubectl apply -f manifests/openjdk11-base-image-pipeline.yaml
-$ kubectl apply -f manifests/openjdk11-base-image-kaniko-pipeline.yaml
-```
-
-## Pipeline 실행 (buildah)
-```
-$ tkn pipeline start openjdk11-base-image-pipeline \
-  -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
-  -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-base-image
+$ kubectl apply -f manifests/openjdk11-build-kaniko-pipeline.yaml
 ```
 
 ## Pipeline 실행 (kaniko)
 ```
-$ tkn pipeline start openjdk11-base-image-kaniko-pipeline \
+$ tkn pipeline start openjdk11-build-kaniko-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
-  -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-base-image
+  -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-build \
+  -p image-tag=v0.0.1 \
+  -p dockerfile=./tekton/openjdk-base-image/dockerfile/Dockerfile.basic
 
-### Buildah 는 privileged로 동작해야함(보안상 취약하고 일부 테스트 환경에서 overlayfs 권한 에러가 남)
-### 빌드 성능 저하도 발생
+### Docker Build, Buildah 는 Build를 위한 Container 가 privileged 권한을 가지고 동작해야함
+### 보안상 취약할 수 있고, 테스트 환경에서 overlayfs 권한 에러가 날 수 있음
+### Docker 안에서 Docker를 수행시키므로 빌드 성능 저하도 발생
 ```
 
 ## Pipeline 로그 조회

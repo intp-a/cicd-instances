@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: openjdk11-base-image-kaniko-pipeline
+  name: openjdk11-build-kaniko-pipeline
 spec:
   workspaces:
     - name: pipeline-workspace-tmp
@@ -10,6 +10,14 @@ spec:
       type: string
       description: Docker image name
       default: private-registry-svc.default.svc.cluster.local:5000/openjdk11-base-image
+    - name: image-tag
+      type: string
+      description: Docker image tag
+      default: v0.0.1
+    - name: dockerfile
+      type: string
+      description: Docker image Dockerfile
+      default: ./tekton/openjdk-base-image/dockerfile/Dockerfile.basic
   tasks:
     - name: clone-repository
       params:
@@ -30,9 +38,9 @@ spec:
         - clone-repository
       params:
         - name: IMAGE
-          value: "$(params.image-repo):$(tasks.clone-repository.results.commit)"
+          value: "$(params.image-repo):$(params.image-tag)"
         - name: DOCKERFILE
-          value: ./tekton/openjdk-base-image/dockerfile/Dockerfile.openjdk11
+          value: $(params.dockerfile)
         - name: EXTRA_ARGS
           value:
             - "--skip-tls-verify"
