@@ -4,7 +4,7 @@ MAINTAINER "gkim" <guardkim9@nate.com>
 ENV LANG ko_KR.UTF-8
 
 WORKDIR /app
-COPY sw/ .
+COPY tekton/openjdk-base-image/sw/ .
 
 WORKDIR /app/javaApp
 
