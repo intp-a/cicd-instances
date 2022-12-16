@@ -6,7 +6,7 @@ spec:
   workspaces:
     - name: pipeline-workspace-tmp
   params:
-    - name: image-repo
+    - name: image-name
       type: string
       description: Docker image name
       default: private-registry-svc.default.svc.cluster.local:5000/openjdk11-base-image
@@ -38,7 +38,7 @@ spec:
         - clone-repository
       params:
         - name: IMAGE
-          value: "$(params.image-repo):$(params.image-tag)"
+          value: "$(params.image-name):$(params.image-tag)"
         - name: DOCKERFILE
           value: $(params.dockerfile)
         - name: EXTRA_ARGS

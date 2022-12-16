@@ -30,14 +30,14 @@ $ kubectl apply -f manifests/openjdk11-build-kaniko-pipeline.yaml
 ## Basic image
 $ tkn pipeline start openjdk11-build-kaniko-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
-  -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-basic \
+  -p image-name=private-registry-svc.default.svc.cluster.local:5000/openjdk11-basic \
   -p image-tag=v0.0.1 \
   -p dockerfile=./tekton/openjdk-base-image/dockerfile/Dockerfile.basic
 
 ## Add APM image
 $ tkn pipeline start openjdk11-build-kaniko-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
-  -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-apm \
+  -p image-name=private-registry-svc.default.svc.cluster.local:5000/openjdk11-apm \
   -p image-tag=v0.0.1 \
   -p dockerfile=./tekton/openjdk-base-image/dockerfile/Dockerfile.addsw
 
