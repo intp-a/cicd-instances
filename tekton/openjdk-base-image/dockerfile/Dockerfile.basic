@@ -1,0 +1,6 @@
+FROM docker.io/openjdk:11.0.16-jdk
+MAINTAINER "gkim" <guardkim9@nate.com>
+
+ENV LANG ko_KR.UTF-8
+
+WORKDIR /app/javaApp
