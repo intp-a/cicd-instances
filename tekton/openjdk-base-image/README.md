@@ -27,11 +27,19 @@ $ kubectl apply -f manifests/openjdk11-build-kaniko-pipeline.yaml
 
 ## Pipeline 실행 (kaniko)
 ```
+## Basic image
 $ tkn pipeline start openjdk11-build-kaniko-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
-  -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-build \
+  -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-basic \
   -p image-tag=v0.0.1 \
   -p dockerfile=./tekton/openjdk-base-image/dockerfile/Dockerfile.basic
+
+## Add APM image
+$ tkn pipeline start openjdk11-build-kaniko-pipeline \
+  -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
+  -p image-repo=private-registry-svc.default.svc.cluster.local:5000/openjdk11-apm \
+  -p image-tag=v0.0.1 \
+  -p dockerfile=./tekton/openjdk-base-image/dockerfile/Dockerfile.addsw
 
 ### Docker Build, Buildah 는 Build를 위한 Container 가 privileged 권한을 가지고 동작해야함
 ### 보안상 취약할 수 있고, 테스트 환경에서 overlayfs 권한 에러가 날 수 있음
