@@ -38,6 +38,9 @@ spec:
       type: string
       description: Docker image Dockerfile
       default: ./basic-springboot-276/dockerfile/Dockerfile
+    - name: release-name
+      default: my-app
+      type: string
   tasks:
     - name: clone-source
       params:
@@ -109,16 +112,16 @@ spec:
         - clone-chart
       taskRef:
         kind: Task
-        name: helm-upgrade-from-repo
+        name: helm-upgrade-from-source
       params:
-      - name: helm_repo
-        value: ./
-      - name: chart_name
+      - name: charts_dir
         value: basic-springboot
+      - name: releases_version
+        value: "$(params.image-tag)"
       - name: release_name
-        value: my-app
+        value: "$(params.release-name)"
       - name: overwrite_values
         value: "image.name=$(params.image-name),image.tag=$(params.image-tag)"
       workspaces:
-        - name: output
+        - name: source
           workspace: pipeline-workspace-tmp
