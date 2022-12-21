@@ -24,6 +24,7 @@ $ kubectl apply -f manifests/pipeline-workspace-pvc.yaml
 ```
 # Pipeline 생성
 $ kubectl apply -f manifests/gradle-build-pipeline.yaml
+$ kubectl apply -f manifests/from-gradle-to-deploy-pipeline.yaml
 
 ## Pipeline 실행 (kaniko)
 ```
@@ -39,6 +40,20 @@ $ tkn pipeline start gradle-build-pipeline \
 ### Docker Build, Buildah 는 Build를 위한 Container 가 privileged 권한을 가지고 동작해야함
 ### 보안상 취약할 수 있고, 테스트 환경에서 overlayfs 권한 에러가 날 수 있음
 ### Docker 안에서 Docker를 수행시키므로 빌드 성능 저하도 발생
+```
+
+## Pipeline 실행 (deploy 까지)
+```
+tkn pipeline start from-gradle-to-deploy-pipeline \
+  -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
+  -p java-repo-url=https://github.com/intp-a/sample-application.git \
+  -p java-repo-rev=main \
+  -p build-dir=basic-springboot-276 \
+  -p image-name=private-registry-svc.default.svc.cluster.local:5000/basic-springboot-276 \
+  -p image-tag=v0.0.1 \
+  -p dockerfile=./basic-springboot-276/dockerfile/Dockerfile \
+  -p chart-repo-url=https://github.com/intp-a/helm-charts.git \
+  -p chart-repo-rev=main
 ```
 
 ## Pipeline 로그 조회

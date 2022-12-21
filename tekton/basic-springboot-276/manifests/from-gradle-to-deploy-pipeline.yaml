@@ -60,7 +60,7 @@ spec:
         - clone-source
       params:
         - name: PROJECT_DIR
-          value:  "$(params.build-dir)"
+          value:  "source/$(params.build-dir)"
         - name: TASKS
           value:
             - clean
@@ -115,7 +115,7 @@ spec:
         name: helm-upgrade-from-repo
       params:
       - name: helm_repo
-        value: ./
+        value: charts/
       - name: chart_name
         value: basic-springboot
       - name: release_name
