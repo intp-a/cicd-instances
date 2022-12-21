@@ -117,7 +117,7 @@ spec:
       - name: release_name
         value: my-app
       - name: overwrite_values
-        value: image.name="$(params.image-name)",image.tag="$(params.image-tag)"
+        value: "image.name=$(params.image-name),image.tag=$(params.image-tag)"
       workspaces:
         - name: output
           workspace: pipeline-workspace-tmp
