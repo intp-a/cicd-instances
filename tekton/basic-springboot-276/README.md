@@ -33,7 +33,7 @@ kubectl apply -f manifests/from-gradle-to-deploy-pipeline.yaml
 kubectl apply -f manifests/clusterrole.yaml
 
 kubectl create rolebinding default-secret-reader \
-  --clusterrole secret-reader \
+  --clusterrole helm-install-role \
   --user system:serviceaccount:default:default \
   --namespace default
 
