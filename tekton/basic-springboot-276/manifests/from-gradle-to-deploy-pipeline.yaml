@@ -47,8 +47,6 @@ spec:
           value: "$(params.java-repo-rev)"
         - name: deleteExisting
           value: "true"
-        - name: subdirectory
-          value: "source"
       taskRef:
         kind: Task
         name: git-clone
@@ -60,7 +58,7 @@ spec:
         - clone-source
       params:
         - name: PROJECT_DIR
-          value:  "source/$(params.build-dir)"
+          value:  "$(params.build-dir)"
         - name: TASKS
           value:
             - clean
@@ -100,8 +98,6 @@ spec:
           value: "$(params.chart-repo-rev)"
         - name: deleteExisting
           value: "true"
-        - name: subdirectory
-          value: "charts"
       taskRef:
         kind: Task
         name: git-clone
@@ -115,7 +111,7 @@ spec:
         name: helm-upgrade-from-repo
       params:
       - name: helm_repo
-        value: charts/
+        value: ./
       - name: chart_name
         value: basic-springboot
       - name: release_name
