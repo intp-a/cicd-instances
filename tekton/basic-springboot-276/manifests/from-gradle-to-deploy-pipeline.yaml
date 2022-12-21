@@ -48,8 +48,6 @@ spec:
           value: "$(params.java-repo-url)"
         - name: revision
           value: "$(params.java-repo-rev)"
-        - name: deleteExisting
-          value: "true"
       taskRef:
         kind: Task
         name: git-clone
@@ -99,8 +97,6 @@ spec:
           value: "$(params.chart-repo-url)"
         - name: revision
           value: "$(params.chart-repo-rev)"
-        - name: deleteExisting
-          value: "true"
       taskRef:
         kind: Task
         name: git-clone
