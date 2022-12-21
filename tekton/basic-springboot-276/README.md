@@ -51,7 +51,7 @@ tkn pipeline start from-gradle-to-deploy-pipeline \
   -p build-dir=basic-springboot-276 \
   -p image-name=private-registry-svc.default.svc.cluster.local:5000/basic-springboot-276 \
   -p image-tag=v0.0.1 \
-  -p dockerfile=./basic-springboot-276/dockerfile/Dockerfile \
+  -p dockerfile=./basic-springboot-276/dockerfile/Dockerfile.public \
   -p chart-repo-url=https://github.com/intp-a/helm-charts.git \
   -p chart-repo-rev=main
 ```
