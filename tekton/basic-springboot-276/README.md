@@ -27,6 +27,12 @@ kubectl apply -f manifests/pipeline-workspace-pvc.yaml
 kubectl apply -f manifests/gradle-build-pipeline.yaml
 kubectl apply -f manifests/from-gradle-to-deploy-pipeline.yaml
 
+
+## Service Account RBAC 생성
+```
+kubectl apply -f manifests/clusterrole.yaml
+```
+
 ## Pipeline 실행 (kaniko)
 ```
 tkn pipeline start gradle-build-pipeline \
@@ -62,3 +68,4 @@ tkn pipeline start from-gradle-to-deploy-pipeline \
 ```
 tkn pipelinerun logs  -f -n default
 ```
+
