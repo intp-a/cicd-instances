@@ -31,6 +31,12 @@ kubectl apply -f manifests/from-gradle-to-deploy-pipeline.yaml
 ## Service Account RBAC 생성
 ```
 kubectl apply -f manifests/clusterrole.yaml
+
+kubectl create rolebinding default-secret-reader \
+  --clusterrole secret-reader \
+  --user system:serviceaccount:default:default \
+  --namespace default
+
 ```
 
 ## Pipeline 실행 (kaniko)
