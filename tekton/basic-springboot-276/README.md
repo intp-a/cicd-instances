@@ -54,7 +54,8 @@ tkn pipeline start from-gradle-to-deploy-pipeline \
   -p image-tag=v0.0.1 \
   -p dockerfile=./basic-springboot-276/dockerfile/Dockerfile.public \
   -p chart-repo-url=https://github.com/intp-a/helm-charts.git \
-  -p chart-repo-rev=main
+  -p chart-repo-rev=main \
+  -p release-name=basic-springboot-276
 ```
 
 ## Pipeline 로그 조회
