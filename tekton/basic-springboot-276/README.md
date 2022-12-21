@@ -1,34 +1,34 @@
 ## Apply Tekton Tasks
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml
-$ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/gradle/0.2/raw
-$ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/kaniko/0.6/raw
-$ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/helm-upgrade-from-repo/0.2/raw
+kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml
+kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/gradle/0.2/raw
+kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/kaniko/0.6/raw
+kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/helm-upgrade-from-repo/0.2/raw
 
-$ ### kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/kubernetes-actions/0.2/raw
+### kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/kubernetes-actions/0.2/raw
 ```
 
 ## Add tmp host path
 ```
-$ mkdir /tmp/tekton-tmp
-$ ssh node01 "mkdir /tmp/tekton-tmp"
+mkdir /tmp/tekton-tmp
+#ssh node01 "mkdir /tmp/tekton-tmp"
 ```
 
 ## Workspace 용도 PV, PVC 생성
 ```
-$ kubectl apply -f manifests/pipeline-workspace-pv.yaml
-$ kubectl apply -f manifests/pipeline-workspace-pvc.yaml
+kubectl apply -f manifests/pipeline-workspace-pv.yaml
+kubectl apply -f manifests/pipeline-workspace-pvc.yaml
 ```
 
 ## Gradle Clean build Piepeline
 ```
 # Pipeline 생성
-$ kubectl apply -f manifests/gradle-build-pipeline.yaml
-$ kubectl apply -f manifests/from-gradle-to-deploy-pipeline.yaml
+kubectl apply -f manifests/gradle-build-pipeline.yaml
+kubectl apply -f manifests/from-gradle-to-deploy-pipeline.yaml
 
 ## Pipeline 실행 (kaniko)
 ```
-$ tkn pipeline start gradle-build-pipeline \
+tkn pipeline start gradle-build-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
   -p java-repo-url=https://github.com/intp-a/sample-application.git \
   -p java-repo-rev=main \
@@ -58,5 +58,5 @@ tkn pipeline start from-gradle-to-deploy-pipeline \
 
 ## Pipeline 로그 조회
 ```
-$ tkn pipelinerun logs  -f -n default
+tkn pipelinerun logs  -f -n default
 ```
