@@ -26,7 +26,7 @@ kubectl apply -f manifests/pipeline-workspace-pvc.yaml
 # Pipeline 생성
 kubectl apply -f manifests/gradle-build-pipeline.yaml
 kubectl apply -f manifests/from-gradle-to-deploy-pipeline.yaml
-
+```
 
 ## Service Account RBAC 생성
 ```
