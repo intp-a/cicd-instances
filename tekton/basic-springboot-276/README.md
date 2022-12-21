@@ -30,6 +30,7 @@ kubectl apply -f manifests/from-gradle-to-deploy-pipeline.yaml
 
 ## Service Account RBAC 생성
 ```
+kubectl apply -f manifests/serviceaccount.yaml 
 kubectl apply -f manifests/clusterrole.yaml
 
 kubectl create rolebinding default-helm-permit \
@@ -59,7 +60,7 @@ tkn pipeline start gradle-build-pipeline \
 ```
 tkn pipeline start from-gradle-to-deploy-pipeline \
   -w name=pipeline-workspace-tmp,claimName=pipeline-workspace-pvc \
-  -s tekton-deploy
+  -s tekton-deploy \
   -p java-repo-url=https://github.com/intp-a/sample-application.git \
   -p java-repo-rev=main \
   -p build-dir=basic-springboot-276 \
