@@ -1,0 +1,127 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: basic-springboot-276
+spec:
+  workspaces:
+    - name: pipeline-workspace-tmp
+  params:
+    - name: java-repo-url
+      type: string
+      description: "Url of Java repository to build"
+      default: https://github.com/intp-a/sample-application.git
+    - name: java-repo-rev
+      type: string
+      description: "Revision of Java repository to build"
+      default: main
+    - name: chart-repo-url
+      type: string
+      description: "Url of Java repository to build"
+      default: https://github.com/intp-a/helm-charts.git
+    - name: chart-repo-rev
+      type: string
+      description: "Revision of Java repository to build"
+      default: main
+    - name: build-dir
+      type: string
+      description: "Base Directory of Java repository to build"
+      default: basic-springboot-276
+    - name: image-name
+      type: string
+      description: Docker image name
+      default: private-registry-svc.default.svc.cluster.local:5000/basic-springboot-276
+    - name: image-tag
+      type: string
+      description: Docker image tag
+      default: v0.0.1
+    - name: dockerfile
+      type: string
+      description: Docker image Dockerfile
+      default: ./basic-springboot-276/dockerfile/Dockerfile
+  tasks:
+    - name: clone-source
+      params:
+        - name: url
+          value: "$(params.java-repo-url)"
+        - name: revision
+          value: "$(params.java-repo-rev)"
+        - name: deleteExisting
+          value: "true"
+        - name: subdirectory
+          value: "source"
+      taskRef:
+        kind: Task
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: pipeline-workspace-tmp
+    - name: gradle-build
+      runAfter:
+        - clone-source
+      params:
+        - name: PROJECT_DIR
+          value:  "$(params.build-dir)"
+        - name: TASKS
+          value:
+            - clean
+            - build
+        - name: GRADLE_IMAGE
+          value: docker.io/library/gradle:7.6.0-jdk11
+      taskRef:
+        kind: Task
+        name: gradle
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace-tmp
+    - name: container-build
+      runAfter:
+        - gradle-build
+      params:
+        - name: IMAGE
+          value: "$(params.image-name):$(params.image-tag)"
+        - name: DOCKERFILE
+          value: $(params.dockerfile)
+        - name: EXTRA_ARGS
+          value:
+            - "--skip-tls-verify"
+      taskRef:
+        kind: Task
+        name: kaniko
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace-tmp
+    - name: clone-chart
+      runAfter:
+        - container-build
+      params:
+        - name: url
+          value: "$(params.chart-repo-url)"
+        - name: revision
+          value: "$(params.chart-repo-rev)"
+        - name: deleteExisting
+          value: "true"
+        - name: subdirectory
+          value: "charts"
+      taskRef:
+        kind: Task
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: pipeline-workspace-tmp
+    - name: helm-upgrade
+      runAfter:
+        - clone-chart
+      taskRef:
+        name: helm-upgrade-from-repo
+      params:
+      - name: helm_repo
+        value: ./
+      - name: chart_name
+        value: basic-springboot
+      - name: release_name
+        value: my-app
+      - name: overwrite_values
+        value: image.name="$(params.image-name)",image.tag="$(params.image-tag)"
+      workspaces:
+        - name: output
+          workspace: pipeline-workspace-tmp

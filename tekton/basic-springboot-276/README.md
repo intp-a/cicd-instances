@@ -1,16 +1,11 @@
-## Apply git clone Task
+## Apply Tekton Tasks
 ```
 $ kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml
-```
-
-## Apply gradle Task
-```
 $ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/gradle/0.2/raw
-```
-
-## Apply kaniko Task
-```
 $ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/kaniko/0.6/raw
+$ kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/helm-upgrade-from-repo/0.2/raw
+
+$ ### kubectl apply -f https://api.hub.tekton.dev/v1/resource/tekton/task/kubernetes-actions/0.2/raw
 ```
 
 ## Add tmp host path
