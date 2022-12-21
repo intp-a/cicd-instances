@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: basic-springboot-276
+  name: from-gradle-to-deploy-pipeline
 spec:
   workspaces:
     - name: pipeline-workspace-tmp
