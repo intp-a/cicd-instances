@@ -108,6 +108,7 @@ spec:
       runAfter:
         - clone-chart
       taskRef:
+        kind: Task
         name: helm-upgrade-from-repo
       params:
       - name: helm_repo
